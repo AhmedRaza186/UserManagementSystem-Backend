@@ -18,7 +18,7 @@ authroutes.post('/signup', async (req, res) => {
             fullName: fullName,
             email: email,
             age: age,
-            password: password,
+            password: password
             // Date: new Date()
 
         })
