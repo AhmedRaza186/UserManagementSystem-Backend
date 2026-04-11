@@ -28,9 +28,16 @@ async function getAllUsersController(req, res) {
 async function updateUserController(req, res) {
     let { id } = req.params;
     console.log(req.params);
-    
+
     try {
-        const Updateduser = await User.findOneAndUpdate({ id: id }, { ...req.body }, { new: true });
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: id },
+            { $set: req.body },
+            {
+                returnDocument: "after",
+                runValidators: true
+            }
+        );
         if (!Updateduser) {
             responseHandler(res, 200, true, 'User not found');
             return;
@@ -42,13 +49,13 @@ async function updateUserController(req, res) {
     }
 }
 
-    async function deleteUserController(req, res) {
+async function deleteUserController(req, res) {
 
-    }
+}
 
-    module.exports = {
-        getAllUsersController,
-        updateUserController,
-        deleteUserController
+module.exports = {
+    getAllUsersController,
+    updateUserController,
+    deleteUserController
 
-    }
+}
