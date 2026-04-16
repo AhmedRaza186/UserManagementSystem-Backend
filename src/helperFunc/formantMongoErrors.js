@@ -16,6 +16,7 @@ function formatMongoError(error) {
     if (error.name === 'CastError') {
         return `Invalid ${error.path}`;
     }
+console.log(error);
 
     // Default fallback
     return 'Something went wrong, please try again';

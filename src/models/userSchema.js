@@ -21,11 +21,28 @@ const UserSchema = new mongoose.Schema({
         type: String,
         minlength: [8, 'Password must be at least 8 characters']
     },
+    profilePic: {
+        type: String,
+        default: null
+    },
+    phone:{
+        type:Number,
+    },
+    otp: {
+        type: Number,
+    },
+    otpExpiry: {
+        type: Date,
+    },
+    isVerified: {
+        type: Boolean,
+        default: true
+    },
     createdAt: {
         type: Date,
         default: Date.now()
     }
 });
 
-const User =  mongoose.model('Users',UserSchema,'Users')
+const User = mongoose.model('Users', UserSchema, 'Users')
 module.exports = User;

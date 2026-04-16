@@ -1,9 +1,10 @@
 
-function responseHandler(res,statusCode, status, message, data = null){
+function responseHandler(res,statusCode, status, message, data = null, token = null) {
    return res.status(statusCode).json({
         status: status,
         message: message,
-        data: data
+        data: data,
+        token: token
     });
 }
 
