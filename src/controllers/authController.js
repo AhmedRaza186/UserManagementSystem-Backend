@@ -23,29 +23,23 @@ const tokenGen = (user) => {
 /* =========================
    SIGNUP (send OTP)
 ========================= */
+/* =========================
+   SIGNUP (send OTP)
+========================= */
 async function signupController(req, res) {
     try {
         const { fullName, email, age, password } = req.body;
 
-        // check existing user
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return responseHandler(res, 400, false, 'Email already registered');
         }
 
-        // hash password
         const hash = await bcrypt.hash(password, saltRounds);
-
-        // generate OTP
         const otp = Math.floor(100000 + Math.random() * 900000);
-
-        // expiry (5 minutes)
         const otpExpiry = Date.now() + 5 * 60 * 1000;
 
-        // send email
-         sendEmailOTP(fullName, email, otp);
-
-        // create user (NOT VERIFIED YET)
+        // 1. Create and Save User FIRST
         const user = new User({
             fullName,
             email,
@@ -55,10 +49,15 @@ async function signupController(req, res) {
             otpExpiry,
             isVerified: false
         });
-
         await user.save();
 
+        // 2. Send Response to Frontend immediately
         responseHandler(res, 201, true, `OTP sent to email ${email}. Verify to complete signup`);
+
+        // 3. Trigger Email without 'await' so it doesn't block the response
+        sendEmailOTP(fullName, email, otp).catch(err => {
+            console.error("Background Email Error:", err);
+        });
 
     } catch (error) {
         let formattedError = formatMongoError(error);
