@@ -43,7 +43,7 @@ async function signupController(req, res) {
         const otpExpiry = Date.now() + 5 * 60 * 1000;
 
         // send email
-        await sendEmailOTP(fullName, email, otp);
+         sendEmailOTP(fullName, email, otp);
 
         // create user (NOT VERIFIED YET)
         const user = new User({
