@@ -10,7 +10,7 @@ const userRoutes = require('./routes/userroutes');
 // This is the most critical line for ENETUNREACH issues
 dns.setDefaultResultOrder('ipv4first');
 
-dns.setServers(['1.1.1.1', '8.8.8.8']);
+// dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 dotenv.config();
 connectDB();

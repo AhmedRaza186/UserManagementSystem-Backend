@@ -4,11 +4,19 @@ const MY_EMAIL = process.env.MY_EMAIL;
 const MY_EMAIL_PASSWORD = process.env.MY_EMAIL_PASSWORD;
 
 const emailConfig = {
-    service: 'gmail',
+host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // MUST be false for 587
     auth: {
         user: process.env.MY_EMAIL,
         pass: process.env.MY_EMAIL_PASSWORD,
     },
+    // Adding back the critical network fixes
+    family: 4, 
+    tls: {
+        rejectUnauthorized: false,
+        minVersion: "TLSv1.2"
+    }
 };
 async function sendEmailOTP(fullName, email, otp) {
     const transporter = nodemailer.createTransport(emailConfig);
