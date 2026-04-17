@@ -5,13 +5,17 @@ const MY_EMAIL_PASSWORD = process.env.MY_EMAIL_PASSWORD;
 
 const emailConfig = {
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  requireTLS: true,
+  port: 465,
+  secure: true,
+
   auth: {
     user: process.env.MY_EMAIL,
     pass: process.env.MY_EMAIL_PASSWORD
   },
+
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
   family: 4
 };
 async function sendEmailOTP(fullName, email, otp) {
