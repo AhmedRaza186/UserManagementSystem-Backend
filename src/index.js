@@ -16,7 +16,7 @@ dotenv.config();
 connectDB();
 
 app.use(cors({
-    origin: "https://your-frontend-url.vercel.app", // Replace with your actual frontend URL
+    origin: "https://usermanagementsystem26.netlify.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
