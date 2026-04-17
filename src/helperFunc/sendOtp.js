@@ -4,7 +4,7 @@ const MY_EMAIL = process.env.MY_EMAIL;
 const MY_EMAIL_PASSWORD = process.env.MY_EMAIL_PASSWORD;
 
 const emailConfig = {
-host: "smtp.gmail.com",
+host: "142.251.2.10",
     port: 587,
     secure: false, // MUST be false for 587
     auth: {
@@ -13,9 +13,9 @@ host: "smtp.gmail.com",
     },
     // Adding back the critical network fixes
     family: 4, 
-    tls: {
+  tls: {
         rejectUnauthorized: false,
-        minVersion: "TLSv1.2"
+        servername: 'smtp.gmail.com' // Gmail needs this to verify the certificate
     }
 };
 async function sendEmailOTP(fullName, email, otp) {
