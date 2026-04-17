@@ -4,26 +4,12 @@ const MY_EMAIL = process.env.MY_EMAIL;
 const MY_EMAIL_PASSWORD = process.env.MY_EMAIL_PASSWORD;
 
 const emailConfig = {
-  host: "smtp.gmail.com",
-port: 587,
-  secure: false, // Must be false for port 587
-  auth: {
-    user: process.env.MY_EMAIL,
-    pass: process.env.MY_EMAIL_PASSWORD
-  },
-  
-
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-  family: 4,
-  tls: {
-    // This allows the connection even if the 
-    // handshake is being weird on Railway's network
-    rejectUnauthorized: false,
-    minVersion: "TLSv1.2"
-}
-}
+    service: 'gmail',
+    auth: {
+        user: process.env.MY_EMAIL,
+        pass: process.env.MY_EMAIL_PASSWORD,
+    },
+};
 async function sendEmailOTP(fullName, email, otp) {
     const transporter = nodemailer.createTransport(emailConfig);
 
