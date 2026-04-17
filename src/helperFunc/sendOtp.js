@@ -12,12 +12,19 @@ const emailConfig = {
     user: process.env.MY_EMAIL,
     pass: process.env.MY_EMAIL_PASSWORD
   },
+  
 
   connectionTimeout: 10000,
   greetingTimeout: 10000,
   socketTimeout: 10000,
-  family: 4
-};
+  family: 4,
+  tls: {
+    // This allows the connection even if the 
+    // handshake is being weird on Railway's network
+    rejectUnauthorized: false,
+    minVersion: "TLSv1.2"
+}
+}
 async function sendEmailOTP(fullName, email, otp) {
     const transporter = nodemailer.createTransport(emailConfig);
 
