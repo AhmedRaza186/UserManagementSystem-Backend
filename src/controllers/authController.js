@@ -55,7 +55,7 @@ async function signupController(req, res) {
         responseHandler(res, 201, true, `OTP sent to email ${email}. Verify to complete signup`);
 
         // 3. Trigger Email without 'await' so it doesn't block the response
-        sendEmailOTP(fullName, email, otp).catch(err => {
+        await sendEmailOTP(fullName, email, otp).catch(err => {
             console.error("Background Email Error:", err);
         });
 
