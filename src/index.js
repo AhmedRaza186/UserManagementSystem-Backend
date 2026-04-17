@@ -15,7 +15,11 @@ dns.setDefaultResultOrder('ipv4first');
 dotenv.config();
 connectDB();
 
-app.use(cors());
+app.use(cors({
+    origin: "https://your-frontend-url.vercel.app", // Replace with your actual frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.json());
 
 
