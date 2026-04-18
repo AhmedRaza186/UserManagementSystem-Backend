@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 async function sendEmailOTP(fullName, email, otp) {
     try {
         await resend.emails.send({
-            from: 'onboarding@resend.dev', // later replace with your verified domain email
+            from: 'ahmedrazamun@gmail.com', // later replace with your verified domain email
             to: email,
             subject: 'OTP Verification',
             html: `
