@@ -15,11 +15,8 @@ dns.setDefaultResultOrder('ipv4first');
 dotenv.config();
 connectDB();
 
-app.use(cors({
-    origin: "https://usermanagementsystem26.netlify.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
+app.use(cors())
+
 app.use(express.json());
 
 
