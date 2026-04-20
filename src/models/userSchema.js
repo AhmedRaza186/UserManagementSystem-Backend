@@ -38,6 +38,13 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    otpResendCount: {
+        type: Number,
+        default: 0
+    },
+    lastOtpResend: {
+        type: Date,
+    },
     createdAt: {
         type: Date,
         default: Date.now()

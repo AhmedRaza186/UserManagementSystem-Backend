@@ -96,6 +96,7 @@ async function verifyOtpController(req, res) {
         user.isVerified = true;
         user.otp = null;
         user.otpExpiry = null;
+        user.otpResendCount = 0; // Reset count on success
 
         await user.save();
 
@@ -172,17 +173,24 @@ async function resendOtpController(req, res) {
             return responseHandler(res, 400, false, 'Account already verified');
         }
 
+        // Limit resend to 3 times
+        if (user.otpResendCount >= 3) {
+            return responseHandler(res, 429, false, 'Maximum OTP resend limit reached. Please try after some time or contact support.');
+        }
+
         const otp = Math.floor(100000 + Math.random() * 900000);
-        const otpExpiry = Date.now() + 5 * 60 * 1000;
+        const otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes
 
         user.otp = otp;
         user.otpExpiry = otpExpiry;
+        user.otpResendCount += 1;
+        user.lastOtpResend = Date.now();
 
         await user.save();
 
         try {
             await sendEmailOTP(user.fullName, email, otp);
-            responseHandler(res, 200, true, 'New OTP sent to your email');
+            responseHandler(res, 200, true, `New OTP sent. Attempt ${user.otpResendCount} of 3`);
         } catch (emailError) {
             console.error("Resend Email Error:", emailError);
             responseHandler(res, 500, false, 'Failed to send OTP email');
