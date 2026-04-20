@@ -7,12 +7,18 @@ import dns from 'dns';
 import authroutes from './routes/authroutes.js';
 import userRoutes from './routes/userroutes.js';
 
-// This is the most critical line for ENETUNREACH issues
-// dns.setDefaultResultOrder('ipv4first');
-
-dns.setServers(['1.1.1.1', '8.8.8.8']);
+try {
+    dns.setServers(['1.1.1.1', '8.8.8.8']);
+} catch (e) {
+    console.warn("DNS setServers failed, skipping...", e.message);
+}
 
 dotenv.config();
+
+if (!process.env.MONGO_URI) {
+    console.error("CRITICAL ERROR: MONGO_URI is not defined in environment variables!");
+}
+
 connectDB();
 
 // 2. Allow your Netlify site to talk to your backend

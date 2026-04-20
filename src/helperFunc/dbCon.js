@@ -9,6 +9,7 @@ try{
     console.log('Connected to MongoDB' + con.connection.host);
 }
 catch(err){
+    console.error("MongoDB Connection Error:", err);
     return err
 }
 }

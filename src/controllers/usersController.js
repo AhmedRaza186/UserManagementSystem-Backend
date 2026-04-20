@@ -46,8 +46,8 @@ async function getAllUsersController(req, res) {
         responseHandler(res, 200, true, 'Users retrieved successfully', cleanUsers);
 
     } catch (error) {
-        console.log(error);
-        responseHandler(res, 500, false, 'Failed to retrieve users');
+        console.log("Error retrieving users:", error);
+        responseHandler(res, 500, false, `Failed to retrieve users: ${error.message || error}`);
     }
 }
 
