@@ -3,7 +3,7 @@ const authroutes = express.Router();
 import User from '../models/userSchema.js';
 import responseHandler from '../helperFunc/responseHandle.js';
 import formatMongoError from '../helperFunc/formantMongoErrors.js';
-import { signupController, loginController, verifyOtpController } from '../controllers/authController.js';
+import { signupController, loginController, verifyOtpController, resendOtpController } from '../controllers/authController.js';
 import jsonwebtoken from 'jsonwebtoken';
 const { verify } = jsonwebtoken;
 
@@ -17,6 +17,8 @@ authroutes.post('/signup', signupController);
 authroutes.post('/verify-otp', verifyOtpController);
 
 authroutes.post('/login', loginController);
+
+authroutes.post('/resend-otp', resendOtpController);
 
 
 export default authroutes;

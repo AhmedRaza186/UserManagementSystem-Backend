@@ -156,10 +156,51 @@ async function loginController(req, res) {
 
 
 /* =========================
+   RESEND OTP
+========================= */
+async function resendOtpController(req, res) {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return responseHandler(res, 404, false, 'User not found');
+        }
+
+        if (user.isVerified) {
+            return responseHandler(res, 400, false, 'Account already verified');
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otpExpiry = Date.now() + 5 * 60 * 1000;
+
+        user.otp = otp;
+        user.otpExpiry = otpExpiry;
+
+        await user.save();
+
+        try {
+            await sendEmailOTP(user.fullName, email, otp);
+            responseHandler(res, 200, true, 'New OTP sent to your email');
+        } catch (emailError) {
+            console.error("Resend Email Error:", emailError);
+            responseHandler(res, 500, false, 'Failed to send OTP email');
+        }
+
+    } catch (error) {
+        responseHandler(res, 500, false, 'Failed to resend OTP');
+    }
+}
+
+
+/* =========================
    EXPORTS
 ========================= */
 export {
     signupController,
     loginController,
-    verifyOtpController
-};
+    verifyOtpController,
+    resendOtpController
+};
+
