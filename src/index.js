@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./helperFunc/dbCon');
-const dns = require('dns');
-const authroutes = require('./routes/authroutes');
-const userRoutes = require('./routes/userroutes');
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './helperFunc/dbCon.js';
+import dns from 'dns';
+import authroutes from './routes/authroutes.js';
+import userRoutes from './routes/userroutes.js';
 
 // This is the most critical line for ENETUNREACH issues
 // dns.setDefaultResultOrder('ipv4first');
@@ -15,7 +15,10 @@ dns.setServers(['1.1.1.1', '8.8.8.8']);
 dotenv.config();
 connectDB();
 
-app.use(cors())
+// 2. Allow your Netlify site to talk to your backend
+app.use(cors({
+    origin: 'https://usermanagementsystem26.netlify.app' 
+}));
 
 app.use(express.json());
 
@@ -45,3 +48,6 @@ app.use('/api/users',userRoutes)
 app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port ' + process.env.PORT);
 });
+
+export default app;
+

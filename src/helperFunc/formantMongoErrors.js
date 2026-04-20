@@ -22,4 +22,4 @@ console.log(error);
     return 'Something went wrong, please try again';
 }
 
-module.exports = formatMongoError;
+export default formatMongoError;

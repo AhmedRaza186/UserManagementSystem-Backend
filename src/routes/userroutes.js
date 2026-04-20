@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const userRoutes = express.Router();
-const User = require('../models/userSchema');
-const responseHandler = require('../helperFunc/responseHandle');
-const formatMongoError = require('../helperFunc/formantMongoErrors');
-const { getAllUsersController, updateUserController, deleteUserController, getLoginedUserController } = require('../controllers/usersController');
+import User from '../models/userSchema.js';
+import responseHandler from '../helperFunc/responseHandle.js';
+import formatMongoError from '../helperFunc/formantMongoErrors.js';
+import { getAllUsersController, updateUserController, deleteUserController, getLoginedUserController } from '../controllers/usersController.js';
 
 userRoutes.get('/health', (req, res) => {
     console.log('User route is working fine');
@@ -20,4 +20,4 @@ userRoutes.put('/', updateUserController);
 
 userRoutes.delete('/', deleteUserController);
 
-module.exports = userRoutes;
+export default userRoutes;

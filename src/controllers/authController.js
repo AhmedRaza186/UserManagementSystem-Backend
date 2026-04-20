@@ -1,9 +1,9 @@
-const User = require('../models/userSchema');
-const responseHandler = require('../helperFunc/responseHandle');
-const formatMongoError = require('../helperFunc/formantMongoErrors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const sendEmailOTP = require('../helperFunc/sendOtp');
+import User from '../models/userSchema.js';
+import responseHandler from '../helperFunc/responseHandle.js';
+import formatMongoError from '../helperFunc/formantMongoErrors.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import sendEmailOTP from '../helperFunc/sendOtp.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -156,8 +156,8 @@ async function loginController(req, res) {
 /* =========================
    EXPORTS
 ========================= */
-module.exports = {
+export {
     signupController,
     loginController,
     verifyOtpController
-};
+};

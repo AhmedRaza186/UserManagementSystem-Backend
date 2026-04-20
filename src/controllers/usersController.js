@@ -1,8 +1,8 @@
-const User = require('../models/userSchema');
-const responseHandler = require('../helperFunc/responseHandle');
-const formatMongoError = require('../helperFunc/formantMongoErrors');
-const jwt = require('jsonwebtoken');
-const { response } = require('express');
+import User from '../models/userSchema.js';
+import responseHandler from '../helperFunc/responseHandle.js';
+import formatMongoError from '../helperFunc/formantMongoErrors.js';
+import jwt from 'jsonwebtoken';
+import { response } from 'express';
 const JWT_SECRET = process.env.JWT_SECRET;
 
 
@@ -153,10 +153,10 @@ async function deleteUserController(req, res) {
     }
 }
 
-module.exports = {
+export {
     getAllUsersController,
     getLoginedUserController,
     updateUserController,
     deleteUserController
 
-}
+}

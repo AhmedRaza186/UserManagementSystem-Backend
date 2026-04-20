@@ -1,10 +1,11 @@
-const express = require('express');
+import express from 'express';
 const authroutes = express.Router();
-const User = require('../models/userSchema');
-const responseHandler = require('../helperFunc/responseHandle');
-const formatMongoError = require('../helperFunc/formantMongoErrors');
-const { signupController, loginController, verifyOtpController } = require('../controllers/authController');
-const { verify } = require('jsonwebtoken');
+import User from '../models/userSchema.js';
+import responseHandler from '../helperFunc/responseHandle.js';
+import formatMongoError from '../helperFunc/formantMongoErrors.js';
+import { signupController, loginController, verifyOtpController } from '../controllers/authController.js';
+import jsonwebtoken from 'jsonwebtoken';
+const { verify } = jsonwebtoken;
 
 authroutes.get('/health', (req, res) => {
     console.log('Auth route is working fine');
@@ -18,4 +19,5 @@ authroutes.post('/verify-otp', verifyOtpController);
 authroutes.post('/login', loginController);
 
 
-module.exports = authroutes;
+export default authroutes;
+

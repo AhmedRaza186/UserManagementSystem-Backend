@@ -8,4 +8,4 @@ function responseHandler(res,statusCode, status, message, data = null, token = n
     });
 }
 
-module.exports = responseHandler;
+export default responseHandler;

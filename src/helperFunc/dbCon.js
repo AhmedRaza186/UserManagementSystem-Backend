@@ -1,8 +1,7 @@
-let mongoose = require('mongoose');
-const dotenv = require('dotenv');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 dotenv.config();
-const responseHandler = require('./responseHandle');
-const formatMongoError = require('./formantMongoErrors');
+
 
 async function connectDB(){
 try{
@@ -16,4 +15,4 @@ catch(err){
 
 
 
-module.exports =  connectDB ;
+export default connectDB;
