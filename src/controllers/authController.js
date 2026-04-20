@@ -51,13 +51,15 @@ async function signupController(req, res) {
         });
         await user.save();
 
-        // 2. Send Response to Frontend immediately
-        responseHandler(res, 201, true, `OTP sent to email ${email}. Verify to complete signup`);
-
-        // 3. Trigger Email without 'await' so it doesn't block the response
-         sendEmailOTP(fullName, email, otp).catch(err => {
-            console.error("Background Email Error:", err);
-        });
+        // 2. Try to send email
+        try {
+            await sendEmailOTP(fullName, email, otp);
+            responseHandler(res, 201, true, `OTP sent to email ${email}. Verify to complete signup`);
+        } catch (emailError) {
+            console.error("Email Sending Error:", emailError);
+            // Optionally: await User.deleteOne({ _id: user._id }); // Rollback if email fails
+            responseHandler(res, 500, false, `User created but failed to send OTP: ${emailError.message || emailError}`);
+        }
 
     } catch (error) {
         let formattedError = formatMongoError(error);
